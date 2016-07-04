@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">लिफ्ट प्रबंधक</string>
+    <string name="vertical_ellipsis">&#8942;</string>
+    <string name="firasans_light">FiraSans_Light.ttf</string>
+    <string name="roboto_light">Roboto_Light.ttf</string>
+    <string name="distance">2 किमी दूर</string>
+    <string name="address">पता</string>
+    <string name="customer_name">ग्राहक का नाम</string>
+    <string name="preferred_time">8AM</string>
+    <string name="splash_banner">लिफ्ट प्रबंधक</string>
+    <string name="splash_main">ल</string>
+    <string name="fragment_one_upcoming">आगामी</string>
+    <string name="fragment_two_all">सब</string>
+    <string name="fragment_three_settings">सेटिंग्स</string>
+    <string name="liftsmanager">लिफ्ट प्रबंधक</string>
+    <string name="login_page">लोग इन वाला पन्ना</string>
+    <string name="enter_phone_number">फोन नंबर दर्ज करें</string>
+    <string name="send_otp">ओटीपी भेजें</string>
+    <string name="select_language">भाषा चुनिए</string>
+    <string name="hindi">हिंदी</string>
+    <string name="english">English</string>
+    <string name="permission_alert">सेटिंग्स से एप्लिकेशन अनुमतियों को सक्षम करें</string>
+    <string name="alert_call_title">कॉल करें</string>
+    <string name="alert_call_msg1">आप यकीन है कि आप कॉल करना चाहते हैं </string>
+    <string name="alert_call_msg2">\?</string>
+    <string name="alert_call_yes">हाँ</string>
+    <string name="alert_call_no">नहीं</string>
+    <string name="title_listing">लिस्टिंग पृष्ठ</string>
+
+</resources>

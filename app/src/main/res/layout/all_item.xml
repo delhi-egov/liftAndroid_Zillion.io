@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:paddingTop="10dp"
+    android:background="@drawable/listing_back"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
+            android:id="@+id/order_id_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight=".45"
+            android:padding="5dp"
+            app:customFont="@string/roboto_light"
+            android:text="ORDER ID 1"
+            android:textSize="18sp" />
+
+        <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight=".45"
+            android:padding="5dp"
+            app:customFont="@string/roboto_light"
+            android:text="CUSTOMER NAME"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:text="@string/vertical_ellipsis"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:textSize="25sp"
+            android:onClick="next"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:weightSum="3">
+
+        <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
+            android:id="@+id/category_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="CATEGORY"
+            app:customFont="@string/roboto_light"
+            android:textSize="18sp" />
+
+        <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
+            android:id="@+id/address_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:text="ADDRESS"
+            app:customFont="@string/roboto_light"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_call"
+            android:background="@null"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:onClick="call"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_action_time"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:onClick="onButtonClicked"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_action_cancel"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>
+
