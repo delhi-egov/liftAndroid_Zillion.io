@@ -28,11 +28,11 @@ import java.util.WeakHashMap;
 
 /**
  * This class provides several utilities to cancel bitmap decoding.
- * <p/>
+ * <p>
  * The function decodeFileDescriptor() is used to decode a bitmap. During
  * decoding if another thread wants to cancel it, it calls the function
  * cancelThreadDecoding() specifying the Thread which is in decoding.
- * <p/>
+ * <p>
  * cancelThreadDecoding() is sticky until allowThreadDecoding() is called.
  */
 public class BitmapManager {

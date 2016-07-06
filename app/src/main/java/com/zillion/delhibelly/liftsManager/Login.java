@@ -1,229 +1,128 @@
 package com.zillion.delhibelly.liftsManager;
 
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.Locale;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.zillion.delhibelly.liftsManager.Network.ErrorUtils;
+import com.zillion.delhibelly.liftsManager.Network.Models.ApiError;
+import com.zillion.delhibelly.liftsManager.Network.Models.User;
+import com.zillion.delhibelly.liftsManager.Network.ServiceGeneratorMain;
 
-public class Login extends AppCompatActivity {
-    private Context cT;
+public class Login extends AppCompatActivity implements View.OnClickListener {
 
-
-    public Login(Context cT) {
-        this.cT = cT;
-    }
-
-    public Login() {
-    }
-
-    CountDownTimer countDownTimer;
-    private EditText phoneNo;
-    private EditText enterOtp;
-    private TextView storeOtp;
-    private TextView viewOtp;
-    private TextView viewTimer;
-    private LinearLayout enterNumberParent;
-    private LinearLayout enterOtpParent;
-    private Button sendOtp;
-    private Button verifyOtp;
-    private String phoneNumber;
-    private Handler handler;
-    private Runnable runnable;
-    private int min = 111111;
-    private int max = 999999;
-    private int wrongattempts = 1;
-    private Random r;
-    private RadioButton eng_radio;
-    private RadioButton hi_radio;
     private Locale myLocale;
     private String lang;
+    private RadioButton eng;
+    private RadioButton hi;
+    private Button login;
+    public static String email = null;
+    public static String password = null;
+    public static String token = null;
+    private EditText loginEmail;
+    private EditText loginPassword;
+    private ProgressDialog dialog;
+    private CoordinatorLayout coordinatorLayout;
+    private Snackbar snackbar;
+    private ApiError error;
 
-    public final static boolean isValidPhoneNumber(CharSequence target) {
-        Matcher mOthers = null;
-        mOthers = Pattern.compile("(^[6789][0-9]{9}$)", Pattern.CASE_INSENSITIVE).matcher(target);
-        if (mOthers.find()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.zillion.delhibelly.liftsManager.R.layout.login);
-        enterNumberParent = (LinearLayout) findViewById(com.zillion.delhibelly.liftsManager.R.id.enterNumberParent);
-        enterOtpParent = (LinearLayout) findViewById(com.zillion.delhibelly.liftsManager.R.id.enterOtpParent);
 
-        phoneNo = (EditText) findViewById(com.zillion.delhibelly.liftsManager.R.id.phone_number);
-        enterOtp = (EditText) findViewById(com.zillion.delhibelly.liftsManager.R.id.enterOtp);
-        sendOtp = (Button) findViewById(com.zillion.delhibelly.liftsManager.R.id.sendOtp);
-
-        storeOtp = (TextView) findViewById(com.zillion.delhibelly.liftsManager.R.id.store_otp);
-        viewOtp = (TextView) findViewById(com.zillion.delhibelly.liftsManager.R.id.viewOtp);
-        viewTimer = (TextView) findViewById(com.zillion.delhibelly.liftsManager.R.id.viewTimer);
-        verifyOtp = (Button) findViewById(com.zillion.delhibelly.liftsManager.R.id.verifyOtp);
-
-        eng_radio = (RadioButton) findViewById(R.id.eng_radio);
-        hi_radio = (RadioButton) findViewById(R.id.hi_radio);
-
-        handler = new Handler();
-
-//        runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                int temp = generateOtp();
-//                viewOtp.setText(Integer.toString(temp));
-//                storeOtp.setTag(Integer.toString(temp));
-//                handler.postDelayed(this, 10000);
-//            }
-//        };
-
-        storeOtp = (TextView) findViewById(com.zillion.delhibelly.liftsManager.R.id.store_otp);
-        View.OnClickListener mHandler = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case com.zillion.delhibelly.liftsManager.R.id.sendOtp: {
-                        Intent intent = new Intent(Login.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                        /*if (!isValidPhoneNumber(phoneNo.getText().toString())) {
-                            Toast.makeText(Login.this, "Incorrect Number", Toast.LENGTH_SHORT).show();
-                        } else {
-                            phoneNumber = phoneNo.getText().toString();
-                            wrongattempts = 1;
-                            //runnable.run();
-                            generateOtp();
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                .coordinatorLayout);
 
 
-                            sendOtp.setVisibility(View.GONE);
-                            enterNumberParent.setVisibility(View.GONE);
+        eng = (RadioButton) findViewById(R.id.eng_radio);
+        hi = (RadioButton) findViewById(R.id.hi_radio);
+        login = (Button) findViewById(R.id.login_btn);
+        eng.setOnClickListener(this);
+        hi.setOnClickListener(this);
+        login.setOnClickListener(this);
 
-                            viewOtp.setVisibility(View.VISIBLE);
-                            viewTimer.setVisibility(View.VISIBLE);
+        loginEmail = (EditText) findViewById(R.id.login_username);
+        loginPassword = (EditText) findViewById(R.id.login_pwd);
 
-                            enterOtpParent.setVisibility(View.VISIBLE);
-                            verifyOtp.setVisibility(View.VISIBLE);
-                            countDownTimer.start();
-                            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(sendOtp.getWindowToken(), 0);
-                        }*/
-                    break;
-
-                    case com.zillion.delhibelly.liftsManager.R.id.verifyOtp:
-
-                        if (enterOtp.getText().toString().equals((String) storeOtp.getTag())) {
-                            viewOtp.setText("Successful");
-                            enterOtp.setText("");
-                            countDownTimer.cancel();
-                            generateOtp();
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            if (wrongattempts == 3) {
-                                reset();
-                            } else {
-                                Toast.makeText(Login.this, "Attempt : " + ++wrongattempts, Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-
-
-                        //Toast.makeText(Login.this,storeOtp.getTag().toString(),Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case R.id.hi_radio:
-                        setHindi();
-                        saveAndRefresh();
-                        break;
-                    case R.id.eng_radio:
-                        setEnglish();
-                        saveAndRefresh();
-                        break;
-                }
-
-            }
-        };
-
-        countDownTimer = new CountDownTimer(130000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                long tempTime = millisUntilFinished / 1000;
-                if (tempTime >= 60) {
-                    if (tempTime % 60 > 0) {
-                        if (tempTime % 60 < 10) {
-                            viewTimer.setText("Expires In : 0" + tempTime / 60 + ":0" + tempTime % 60);
-                        } else {
-                            viewTimer.setText("Expires In : 0" + tempTime / 60 + ":" + tempTime % 60);
-                        }
-
-                    } else {
-                        viewTimer.setText("Expires In : 0" + ((tempTime / 60) - 1) + ":59");
-                    }
-                } else {
-                    if (tempTime % 60 < 10) {
-                        viewTimer.setText("Expires In : 00:0" + tempTime);
-                    } else {
-                        viewTimer.setText("Expires In : 00:" + tempTime);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFinish() {
-                reset();
-                Toast.makeText(Login.this, "OTP EXPIRED", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        sendOtp.setOnClickListener(mHandler);
-        verifyOtp.setOnClickListener(mHandler);
-        eng_radio.setOnClickListener(mHandler);
-        hi_radio.setOnClickListener(mHandler);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
+        email = preferences.getString("email",null);
+        password = preferences.getString("password",null);
+        loginEmail.setText(email);
+        loginPassword.setText(password);
 
     }
 
-    public void generateOtp() {
-        r = new Random();
-        int temp = r.nextInt(max - min + 1) + min;
-        viewOtp.setText(Integer.toString(temp));
-        storeOtp.setTag(Integer.toString(temp));
+    public void setCredentials(String email, String password, String token,int id) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token);
+        editor.putString("email", email);
+        editor.putString("password", password);
+        System.out.println("token "+token);
+        editor.putInt("id", id);
+        editor.apply();
+        Intent intent = new Intent(Login.this, MainActivity.class);
+        startActivity(intent);
     }
 
-    public void reset() {
-        viewOtp.setVisibility(View.GONE);
-        viewTimer.setVisibility(View.GONE);
+    public void login() {
+        final String username = this.loginEmail.getText().toString();
+        final String password = this.loginPassword.getText().toString();
+        if (username.isEmpty() || password.isEmpty()) {
+            snackbar = Snackbar
+                    .make(coordinatorLayout, "Please Fill All Details", Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        } else {
+            dialog = new ProgressDialog(Login.this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("Loading...");
+            dialog.show();
+            final ServiceGeneratorMain.UserClient userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
+            Call<User> call = userClient.getToken(username, password);
+            call.enqueue(new Callback<User>() {
 
-        enterOtpParent.setVisibility(View.GONE);
-        verifyOtp.setVisibility(View.GONE);
-        enterOtp.setText("");
-        enterNumberParent.setVisibility(View.VISIBLE);
-        sendOtp.setVisibility(View.VISIBLE);
-        wrongattempts = 1;
-        generateOtp();
-        countDownTimer.cancel();
+                @Override
+                public void onResponse(Response<User> response, Retrofit retrofit) throws NullPointerException {
+                    if (response.isSuccess()) {
+                        setCredentials(username, password, response.body().getToken(),response.body().getInspector().getId());
+                        dialog.dismiss();
+                    } else {
+                        error = ErrorUtils.parseError(response,retrofit);
+                        snackbar = Snackbar
+                                .make(coordinatorLayout, error.message(), Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                        dialog.dismiss();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.d("Error", t.getMessage());
+                    dialog.dismiss();
+                }
+            });
+        }
     }
 
     public void setLocale(String lang) {
@@ -235,15 +134,16 @@ public class Login extends AppCompatActivity {
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
     }
-        public void saveAndRefresh() {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("locale", lang);
-            editor.apply();
-            Intent refresh = new Intent(this, Login.class);
-            startActivity(refresh);
-            finish();
-        }
+
+    public void saveAndRefresh() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("locale", lang);
+        editor.apply();
+        Intent refresh = new Intent(this, Login.class);
+        startActivity(refresh);
+        finish();
+    }
 
     public void setHindi() {
         setLocale("hi");
@@ -263,5 +163,24 @@ public class Login extends AppCompatActivity {
         getPackageManager().setComponentEnabledSetting(
                 new ComponentName("com.zillion.delhibelly.liftsManager", "com.zillion.delhibelly.liftsManager.SplashScreen_New"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.hi_radio:
+                setHindi();
+                saveAndRefresh();
+                break;
+            case R.id.eng_radio:
+                setEnglish();
+                saveAndRefresh();
+                break;
+            case R.id.login_btn:
+                login();
+                break;
+        }
+
     }
 }

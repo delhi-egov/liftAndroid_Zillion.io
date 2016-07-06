@@ -5,12 +5,7 @@
     <string name="vertical_ellipsis">&#8942;</string>
     <string name="firasans_light">FiraSans_Light.ttf</string>
     <string name="roboto_light">Roboto_Light.ttf</string>
-    <string name="distance">2 किमी दूर</string>
-    <string name="address">पता</string>
-    <string name="customer_name">ग्राहक का नाम</string>
-    <string name="preferred_time">8AM</string>
-    <string name="splash_banner">लिफ्ट प्रबंधक</string>
-    <string name="splash_main">ल</string>
+    <string name="splash_banner">सरकार। राष्ट्रीय राजधानी क्षेत्र दिल्ली</string>
     <string name="fragment_one_upcoming">आगामी</string>
     <string name="fragment_two_all">सब</string>
     <string name="fragment_three_settings">सेटिंग्स</string>
@@ -27,6 +22,5 @@
     <string name="alert_call_msg2">\?</string>
     <string name="alert_call_yes">हाँ</string>
     <string name="alert_call_no">नहीं</string>
-    <string name="title_listing">लिस्टिंग पृष्ठ</string>
 
 </resources>

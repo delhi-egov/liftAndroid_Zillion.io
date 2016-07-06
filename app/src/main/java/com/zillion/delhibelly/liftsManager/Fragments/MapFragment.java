@@ -1,11 +1,11 @@
 package com.zillion.delhibelly.liftsManager.Fragments;
 
 import android.Manifest;
-import android.support.v4.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,11 +42,11 @@ public class MapFragment extends Fragment implements
     private GoogleMap mMap;
     private LatLngBounds mInitialMapBounds;
 
-    public static MapFragment newInstance() {
-        return new MapFragment();
+    public MapFragment() {
     }
 
-    public MapFragment() {
+    public static MapFragment newInstance() {
+        return new MapFragment();
     }
 
     @Override
@@ -89,12 +89,12 @@ public class MapFragment extends Fragment implements
     }
 
     private LatLngBounds loadMapMarkers(GoogleMap map) {
-        ArrayList<MapMarker> mapMarkers =  MapMarker.getMapMarkers();
+        ArrayList<MapMarker> mapMarkers = MapMarker.getMapMarkers();
 
         LatLngBounds.Builder bounds = new LatLngBounds.Builder();
         MarkerOptions markerOptions;
         Marker marker;
-        for(MapMarker mapMarker : mapMarkers) {
+        for (MapMarker mapMarker : mapMarkers) {
             markerOptions = new MarkerOptions();
             markerOptions.position(new LatLng(mapMarker.getLat(), mapMarker.getLng()));
             marker = map.addMarker(markerOptions);
@@ -111,7 +111,7 @@ public class MapFragment extends Fragment implements
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission to access the location is missing.
-            this.requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+            this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION_REQUEST_CODE);
         } else if (mMap != null) {
             // Access to the location has been granted to the app.

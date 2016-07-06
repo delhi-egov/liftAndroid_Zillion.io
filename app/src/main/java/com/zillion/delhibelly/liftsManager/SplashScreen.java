@@ -1,12 +1,10 @@
 package com.zillion.delhibelly.liftsManager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -17,7 +15,6 @@ public class SplashScreen extends AppCompatActivity {
 
     private String lang;
     private Locale myLocale;
-
 
 
     @Override
@@ -31,7 +28,7 @@ public class SplashScreen extends AppCompatActivity {
                 try {
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(SplashScreen.this);
                     lang = preferences.getString("locale", null);
-                    if(lang!=null && lang.equals("hi")) {
+                    if (lang != null && lang.equals("hi")) {
                         setLocale("hi");
                     }
                     sleep(2000);

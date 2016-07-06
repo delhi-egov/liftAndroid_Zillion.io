@@ -14,13 +14,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 public class CustomSupportMapFragment extends SupportMapFragment {
     public static final String FRAGMENT_TAG = CustomSupportMapFragment.class.getSimpleName();
 
-    /**
-     * Listener interface to tell when the map is ready
-     */
-    public static interface OnMapFragmentReadyListener {
-        void onMapFragmentReady();
-    }
-
     public CustomSupportMapFragment() {
         super();
     }
@@ -39,5 +32,12 @@ public class CustomSupportMapFragment extends SupportMapFragment {
             ((OnMapFragmentReadyListener) fragment).onMapFragmentReady();
         }
         return v;
+    }
+
+    /**
+     * Listener interface to tell when the map is ready
+     */
+    public static interface OnMapFragmentReadyListener {
+        void onMapFragmentReady();
     }
 }

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -16,15 +24,11 @@
         android:layout_marginTop="100dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:shadowColor="#000000"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="10"
         android:text="@string/liftsmanager"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="40sp"
-        app:customFont="@string/firasans_light" />
+        app:customFont="@string/roboto_light" />
 
     <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
         android:layout_width="wrap_content"
@@ -33,46 +37,15 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:shadowColor="#000000"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="20"
         android:text="@string/login_page"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="20sp"
         app:customFont="@string/roboto_light" />
-    <!-- <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="1dp"
-         android:background="#ffffff"
-         android:layout_marginTop="10dp"
-         android:layout_alignLeft="@+id/title"
-         android:layout_alignRight="@+id/title"
-         android:layout_below="@id/title"
-         android:textAlignment="center"
-         />-->
 
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:layout_marginLeft="2dp"-->
-    <!--android:layout_marginTop="2dp"-->
-    <!--android:layout_marginRight="-2dp"-->
-    <!--android:background="#000000"-->
-    <!--android:layout_alignLeft="@+id/title"-->
-    <!--android:layout_alignRight="@+id/title"-->
-    <!--android:layout_below="@id/title"-->
-    <!--android:textAlignment="center"-->
-    <!--/>-->
-    <TextView
-        android:id="@+id/store_otp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/enterNumberParent"
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
@@ -81,155 +54,99 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/add_details"
+        android:orientation="vertical"
         android:visibility="visible">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/login_username"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@null"
+            android:hint="Username"
+            android:inputType="textAutoComplete"
+            android:maxLength="20"
             android:padding="10dp"
-            android:text="+91"
-            android:textColor="#79818f"
+            android:textColor="#ffffff"
             android:textSize="15sp" />
 
         <TextView
-            android:layout_width="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#4fffffff" />
+
+        <EditText
+            android:id="@+id/login_pwd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#79818f" />
-
-        <EditText
-            android:id="@+id/phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="@string/enter_phone_number"
-            android:inputType="number"
-            android:maxLength="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:maxLength="20"
             android:padding="10dp"
-            android:textColor="#79818f"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/enterOtpParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/add_details"
-        android:visibility="gone">
-
-        <EditText
-            android:id="@+id/enterOtp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="Enter OTP"
-            android:inputType="number"
-            android:maxLength="6"
-            android:padding="10dp"
-            android:textAlignment="center"
-            android:textColor="#79818f"
+            android:textColor="#ffffff"
             android:textSize="15sp" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/sendOtp"
+        android:id="@+id/login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/enterNumberParent"
+        android:layout_below="@+id/login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/send_but"
+        android:background="@drawable/login_btn"
         android:minHeight="35dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/send_otp"
+        android:text="LOGIN"
         android:textColor="#ffffff">
 
         <requestFocus />
     </Button>
 
-    <Button
-        android:id="@+id/verifyOtp"
+    <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
+        android:id="@+id/select_lang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/enterOtpParent"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/send_but"
         android:minHeight="35dp"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
         android:paddingRight="20dp"
-        android:text="Verify"
-        android:textColor="#ffffff"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/viewOtp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
-        android:textColor="#ffffff"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/viewTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/verifyOtp"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:textColor="#dfdfdf" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="20dp">
+        android:text="@string/select_language"
+        android:textColor="#ffffff" />
 
-        <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
-            android:id="@+id/LanOptn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/enterOtpParent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:minHeight="35dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="20dp"
-            android:text="@string/select_language"
-            android:textColor="#ffffff" />
+    <RadioButton
+        android:id="@+id/eng_radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:minHeight="35dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/english"
+        android:layout_toEndOf="@+id/select_lang"
+        android:layout_alignBaseline="@id/select_lang"
+        android:layout_alignParentBottom="true"
+        android:textColor="#ffffff"
+        android:layout_toRightOf="@+id/select_lang" />
 
-        <RadioButton
-            android:id="@+id/eng_radio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:minHeight="35dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/english"
-            android:textColor="#ffffff" />
+    <RadioButton
+        android:id="@+id/hi_radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:minHeight="35dp"
+        android:paddingLeft="10dp"
+        android:layout_toEndOf="@+id/eng_radio"
+        android:layout_alignBaseline="@id/select_lang"
+        android:layout_alignParentBottom="true"
+        android:text="@string/hindi"
+        android:textColor="#ffffff"
+        android:layout_toRightOf="@+id/eng_radio" />
 
-        <RadioButton
-            android:id="@+id/hi_radio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:minHeight="35dp"
-            android:paddingLeft="10dp"
-            android:text="@string/hindi"
-            android:textColor="#ffffff" />
 
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>

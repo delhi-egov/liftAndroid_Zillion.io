@@ -1,13 +1,6 @@
 package com.zillion.delhibelly.liftsManager.Adapters;
 
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zillion.delhibelly.liftsManager.Fragments.Upcoming;
-import com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus;
 import com.zillion.delhibelly.liftsManager.MainActivity;
 import com.zillion.delhibelly.liftsManager.R;
 
@@ -26,17 +18,15 @@ import java.util.List;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
 
-    private List<HashMap> data;
     MainActivity main;
     Upcoming fragment;
+    private List<HashMap> data;
 
     public UpcomingAdapter(List<HashMap> data, MainActivity main, Upcoming fragment) {
-
         this.data = data;
         this.main = main;
         this.fragment = fragment;
     }
-
 
     // Create new views (invoked by the layout manager)
     @Override

@@ -17,8 +17,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-    </style>
+    <style name="dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert"></style>
 
     <style name="ContentImageBadgeTitle" parent="MyMaterialTheme">
         <item name="android:alpha">0.5</item>

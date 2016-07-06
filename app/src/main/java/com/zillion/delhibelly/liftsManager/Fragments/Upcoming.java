@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zillion.delhibelly.liftsManager.Adapters.UpcomingAdapter;
-import com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus;
 import com.zillion.delhibelly.liftsManager.ListingActivity;
 import com.zillion.delhibelly.liftsManager.MainActivity;
 import com.zillion.delhibelly.liftsManager.R;
@@ -29,12 +29,12 @@ import java.util.List;
 
 public class Upcoming extends Fragment {
 
-    //XClass obj = new XClass(ProfileActivity.this);
+    MainActivity main;
     private RecyclerView recyclerView;
     private HashMap<String, String> map;
     private List<HashMap> data;
     private String number;
-    MainActivity main;
+    private SwipeRefreshLayout swipeContainer;
 
     public Upcoming() {
         // Required empty public constructor
@@ -50,6 +50,11 @@ public class Upcoming extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        preparedata();
+
+        // Send context to adapter
+        main = (MainActivity) getActivity();
+        UpcomingAdapter mAdapter = new UpcomingAdapter(data, main, this);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.upcoming_fragment, container, false);
@@ -62,17 +67,23 @@ public class Upcoming extends Fragment {
         //recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // this is data fro recycler view
-        // 3. create an adapter
+        // 4. Swipe container view
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        swipeContainer.setColorSchemeResources(R.color.colorPrimary);
+
+        // 3. this is data for recycler view
         preparedata();
 
-        main = (MainActivity) getActivity();
-        UpcomingAdapter mAdapter = new UpcomingAdapter(data, main, this);
-
-        // 4. set adapter
+        // 5. set adapter
         recyclerView.setAdapter(mAdapter);
 
-        // 5. set item animator to DefaultAnimator
+        // 6. set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return rootView;
@@ -107,10 +118,10 @@ public class Upcoming extends Fragment {
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.dialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.dialog);
         builder.setTitle(main.getString(R.string.alert_call_title))
                 .setIcon(R.drawable.ic_action_call)
-                .setMessage(main.getString(R.string.alert_call_msg1)+" "+number+main.getString(R.string.alert_call_msg2))
+                .setMessage(main.getString(R.string.alert_call_msg1) + " " + number + main.getString(R.string.alert_call_msg2))
                 .setPositiveButton(main.getString(R.string.alert_call_yes), dialogClickListener)
                 .setNegativeButton(main.getString(R.string.alert_call_no), dialogClickListener).show();
 

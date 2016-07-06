@@ -4,12 +4,7 @@
     <string name="vertical_ellipsis">&#8942;</string>
     <string name="firasans_light">FiraSans_Light.ttf</string>
     <string name="roboto_light">Roboto_Light.ttf</string>
-    <string name="distance">2 km away</string>
-    <string name="address">Address</string>
-    <string name="customer_name">Customer Name</string>
-    <string name="preferred_time">8AM</string>
     <string name="splash_banner">Govt. of NCT of Delhi</string>
-    <string name="splash_main">L</string>
     <string name="fragment_one_upcoming">Upcoming</string>
     <string name="fragment_two_all">All</string>
     <string name="fragment_three_settings">Settings</string>
@@ -26,7 +21,6 @@
     <string name="alert_call_msg2">\?</string>
     <string name="alert_call_yes">Yes</string>
     <string name="alert_call_no">No</string>
-    <string name="title_listing">Listing Page</string>
     <string name="permission_required_toast">Permission Required</string>
     <string name="permission_rationale_location">Why we need your location...</string>
     <string name="location_permission_denied">Location permission denied</string>

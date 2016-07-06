@@ -21,8 +21,8 @@
     <com.zillion.delhibelly.liftsManager.Helpers.TextViewPlus
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/textview"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:orientation="vertical"
         android:text="@string/splash_banner"

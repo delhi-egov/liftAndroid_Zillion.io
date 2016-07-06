@@ -1,4 +1,4 @@
-package com.zillion.delhibelly.liftsManager.Helpers;
+package com.zillion.delhibelly.liftsManager;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,8 +25,8 @@ public class TextViewPlus extends TextView {
     }
 
     private void setCustomFont(Context ctx, AttributeSet attrs) {
-        TypedArray a = ctx.obtainStyledAttributes(attrs, com.zillion.delhibelly.liftsManager.R.styleable.TextViewPlus);
-        String customFont = a.getString(com.zillion.delhibelly.liftsManager.R.styleable.TextViewPlus_customFont);
+        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewPlus);
+        String customFont = a.getString(R.styleable.TextViewPlus_customFont);
         setCustomFont(ctx, customFont);
         a.recycle();
     }

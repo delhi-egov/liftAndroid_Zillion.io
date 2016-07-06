@@ -12,6 +12,13 @@ public class MapMarker {
     private String description;
 
 
+    public MapMarker(int id, double lat, double lng, String description) {
+        this.id = id;
+        this.lat = lat;
+        this.lng = lng;
+        this.description = description;
+    }
+
     // TODO, make async
     public static ArrayList<MapMarker> getMapMarkers() {
         ArrayList<MapMarker> list = new ArrayList<MapMarker>();
@@ -19,13 +26,6 @@ public class MapMarker {
         list.add(new MapMarker(1, 37.6213, -122.3790, "SFO Airport"));
         list.add(new MapMarker(1, 39.8561, -104.6737, "Denver Airport"));
         return list;
-    }
-
-    public MapMarker(int id, double lat, double lng, String description) {
-        this.id = id;
-        this.lat = lat;
-        this.lng = lng;
-        this.description = description;
     }
 
     public int getId() {

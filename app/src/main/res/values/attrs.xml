@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MultiRowsRadioGroup">
-        <attr name="customRadio" format="string"/>
+        <attr name="customRadio" format="string" />
     </declare-styleable>
     <declare-styleable name="TextViewPlus">
-        <attr name="customFont" format="string"/>
+        <attr name="customFont" format="string" />
     </declare-styleable>
 </resources>

@@ -1,38 +1,52 @@
 package com.zillion.delhibelly.liftsManager;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.zillion.delhibelly.liftsManager.Adapters.UpcomingAdapter;
-import com.zillion.delhibelly.liftsManager.Fragments.TimePickerFragment;
-import com.zillion.delhibelly.liftsManager.Fragments.Upcoming;
-import com.zillion.delhibelly.liftsManager.Fragments.Settings;
+import com.zillion.delhibelly.liftsManager.Adapters.AllAdapter;
 import com.zillion.delhibelly.liftsManager.Fragments.All;
+import com.zillion.delhibelly.liftsManager.Fragments.Settings;
+import com.zillion.delhibelly.liftsManager.Fragments.Upcoming;
+import com.zillion.delhibelly.liftsManager.Network.ErrorUtils;
+import com.zillion.delhibelly.liftsManager.Network.Models.ApiError;
+import com.zillion.delhibelly.liftsManager.Network.Models.Listing;
+import com.zillion.delhibelly.liftsManager.Network.ServiceGeneratorMain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private String number;
-    public String time;
+    public static String email = null;
+    public static String password = null;
+    public static String token = null;
+    public static int id = 0;
+    ServiceGeneratorMain.UserClient userClient;
+    public List<Listing> listings = new ArrayList<>();
+    private ApiError error;
+    private Snackbar snackbar;
+    private CoordinatorLayout coordinatorLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +64,17 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        email = preferences.getString("email", null);
+        password = preferences.getString("password", null);
+        token = preferences.getString("token", null);
+        id = preferences.getInt("id", 0);
+
+        userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
