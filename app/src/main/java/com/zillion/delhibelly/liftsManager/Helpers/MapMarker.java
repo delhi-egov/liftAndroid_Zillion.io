@@ -22,8 +22,6 @@ public class MapMarker {
     // TODO, make async
     public static ArrayList<MapMarker> getMapMarkers() {
         ArrayList<MapMarker> list = new ArrayList<MapMarker>();
-        list.add(new MapMarker(1, 47.4502, -122.3088, "SEA-TAC Airport"));
-        list.add(new MapMarker(1, 37.6213, -122.3790, "SFO Airport"));
         list.add(new MapMarker(1, 39.8561, -104.6737, "Denver Airport"));
         return list;
     }

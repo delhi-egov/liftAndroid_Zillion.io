@@ -2,11 +2,16 @@ package com.zillion.delhibelly.liftsManager.Fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +27,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.zillion.delhibelly.liftsManager.Helpers.CustomSupportMapFragment;
 import com.zillion.delhibelly.liftsManager.Helpers.MapMarker;
 import com.zillion.delhibelly.liftsManager.Helpers.PermissionUtils;
+import com.zillion.delhibelly.liftsManager.ListingActivity;
 import com.zillion.delhibelly.liftsManager.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kohli on 01/07/16.
@@ -41,6 +49,12 @@ public class MapFragment extends Fragment implements
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
     private LatLngBounds mInitialMapBounds;
+    Location location;
+    Geocoder geocoder;
+    LocationManager lm;
+    ListingActivity main;
+    String place = "Gurgaon,India";
+
 
     public MapFragment() {
     }
@@ -54,6 +68,9 @@ public class MapFragment extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_map, container, false);
+
+        main = (ListingActivity) getActivity();
+
 
         // create SupportMapFragment, and listen for onMapfragmentReady callback
         mMapFragment = CustomSupportMapFragment.newInstance();
@@ -89,16 +106,40 @@ public class MapFragment extends Fragment implements
     }
 
     private LatLngBounds loadMapMarkers(GoogleMap map) {
+        place = main.address;
         ArrayList<MapMarker> mapMarkers = MapMarker.getMapMarkers();
-
         LatLngBounds.Builder bounds = new LatLngBounds.Builder();
-        MarkerOptions markerOptions;
         Marker marker;
-        for (MapMarker mapMarker : mapMarkers) {
-            markerOptions = new MarkerOptions();
-            markerOptions.position(new LatLng(mapMarker.getLat(), mapMarker.getLng()));
-            marker = map.addMarker(markerOptions);
-            bounds.include(marker.getPosition());
+        //Toast.makeText(MapsActivity.this, location, Toast.LENGTH_SHORT).show();
+        List<Address> addressList = null;
+        //boolean didItWork = true;
+
+
+        if (place != null || !place.equals(" "))
+
+        {
+            Geocoder geocoder = new Geocoder(main);
+            try {
+                addressList = geocoder.getFromLocationName(place, 5);
+                Log.i("Var valb4", addressList + "");
+            } catch (IOException e) {
+                Log.i("Exception", e.toString());
+                e.printStackTrace();
+            }
+            Log.i("Var value", addressList + "");
+            try {
+                Address address = addressList.get(0);
+                LatLng latlng = new LatLng(address.getLatitude(), address.getLongitude());
+                double lng = address.getLongitude();
+                double ltd = address.getLatitude();
+                String ltde = Double.toString(ltd);
+                String lngt = Double.toString(lng);
+                marker = mMap.addMarker(new MarkerOptions().position(latlng).title("Marker"));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,40));
+                bounds.include(marker.getPosition());
+                return bounds.build();
+            } catch (IndexOutOfBoundsException e) {
+            }
         }
         return bounds.build();
     }

@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#FAFAFA"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -129,6 +130,9 @@
                         android:layout_height="wrap_content"
                         android:hint="Name"
                         android:textSize="14sp"
+                        android:maxLength="50"
+                        android:lines="1"
+                        android:inputType="textPersonName"
                         android:layout_weight="1" />
 
                     <EditText
@@ -137,6 +141,9 @@
                         android:layout_height="wrap_content"
                         android:hint="Address"
                         android:textSize="14sp"
+                        android:maxLength="50"
+                        android:lines="1"
+                        android:inputType="textPostalAddress"
                         android:layout_weight="1" />
 
                 </LinearLayout>
@@ -165,9 +172,13 @@
                 <EditText
                     android:id="@+id/form_item2_addr"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:inputType="textPostalAddress"
                     android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content" />
+                    android:maxLength="50"
+                    android:lines="1"
+                     />
 
 
             </LinearLayout>
@@ -227,6 +238,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="License No."
+                        android:maxLength="50"
+                        android:lines="1"
+                        android:inputType="textPersonName"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -258,7 +272,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Company Name"
+                    android:inputType="textPersonName"
                     android:textSize="14sp"
+                    android:maxLength="50"
+                    android:lines="1"
                     android:layout_marginTop="10dp" />
 
             </LinearLayout>
@@ -288,6 +305,9 @@
                     android:layout_height="wrap_content"
                     android:hint="Type of Lift"
                     android:textSize="14sp"
+                    android:inputType="textPersonName"
+                    android:maxLength="50"
+                    android:lines="1"
                     android:layout_marginTop="10dp"/>
 
             </LinearLayout>
@@ -320,6 +340,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:hint="in digits"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="number"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
 
@@ -354,6 +377,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:hint="in digits"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="number"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
 
@@ -387,6 +413,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="in mm"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
@@ -421,6 +450,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="in mm"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
@@ -455,6 +487,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="in mm"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
@@ -496,6 +531,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="(W) in mm"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_weight="1" />
 
@@ -504,6 +542,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="(D) in mm"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_weight="1" />
 
@@ -546,6 +587,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="(W) in mm"
+                        android:maxLength="50"
+                        android:lines="1"
+                        android:inputType="numberDecimal"
                         android:textSize="14sp"
                         android:layout_weight="1" />
 
@@ -554,6 +598,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="(D) in mm"
+                        android:maxLength="50"
+                        android:lines="1"
+                        android:inputType="numberDecimal"
                         android:textSize="14sp"
                         android:layout_weight="1" />
 
@@ -589,6 +636,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="textPersonName"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
 
@@ -670,12 +720,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:maxLength="50"
+                    android:lines="1"
+                    android:inputType="textPersonName"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/form_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/form_item15"

@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zillion.delhibelly.liftsManager.R;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext())
-                .inflate(com.zillion.delhibelly.liftsManager.R.layout.settings_item, parent, false);
+                .inflate(R.layout.upcoming_item, parent, false);
 
         // create ViewHolder
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
@@ -36,10 +38,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.order.setText(data.get(position).get("order").toString());
+       /* viewHolder.order.setText(data.get(position).get("order").toString());
         viewHolder.category.setText(data.get(position).get("category").toString());
         viewHolder.bids.setText(data.get(position).get("bids").toString());
-        viewHolder.highest.setText(data.get(position).get("highest").toString());
+        viewHolder.highest.setText(data.get(position).get("highest").toString());*/
         //viewHolder.items_requested.setText(data.get(position).get("items").toString() + " Item requested");
     }
 
@@ -57,10 +59,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            order = (TextView) itemLayoutView.findViewById(com.zillion.delhibelly.liftsManager.R.id.order_id_live);
+          /*  order = (TextView) itemLayoutView.findViewById(com.zillion.delhibelly.liftsManager.R.id.order_id_live);
             category = (TextView) itemLayoutView.findViewById(com.zillion.delhibelly.liftsManager.R.id.category_live);
             bids = (TextView) itemLayoutView.findViewById(com.zillion.delhibelly.liftsManager.R.id.bids_live);
-            highest = (TextView) itemLayoutView.findViewById(com.zillion.delhibelly.liftsManager.R.id.highest_live);
+            highest = (TextView) itemLayoutView.findViewById(com.zillion.delhibelly.liftsManager.R.id.highest_live);*/
         }
     }
 }

@@ -1,9 +1,8 @@
 package com.zillion.delhibelly.liftsManager.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,8 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.zillion.delhibelly.liftsManager.Adapters.AllAdapter;
+import com.zillion.delhibelly.liftsManager.Adapters.DataAdapter;
+import com.zillion.delhibelly.liftsManager.Adapters.SettingsAdapter;
 import com.zillion.delhibelly.liftsManager.MainActivity;
 import com.zillion.delhibelly.liftsManager.Network.ErrorUtils;
 import com.zillion.delhibelly.liftsManager.Network.Models.ApiError;
@@ -31,23 +33,22 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-
-public class All extends Fragment {
-
+public class Submitted extends Fragment {
+    MainActivity main;
     private RecyclerView recyclerView;
-    private HashMap map;
+    private HashMap<String, String> map;
+    private List<HashMap> data;
+    private String number;
     private SwipeRefreshLayout swipeContainer;
-    private List<HashMap> data = new ArrayList<>();
-    private MainActivity main;
-    public List<Listing> listings = new ArrayList<>();
-    ServiceGeneratorMain.UserClient userClient;
+    private ProgressDialog dialog;
+    private ServiceGeneratorMain.UserClient userClient;
     private ApiError error;
-    private Snackbar snackbar;
-    private CoordinatorLayout coordinatorLayout;
+    ImageButton reschd;
+    TextView reschd_title;
 
-
-    public All() {
+    public Submitted() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -55,27 +56,27 @@ public class All extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Send context to adapter
+        main = (MainActivity) getActivity();
+
+        userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
+
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.all_fragment, container, false);
-        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.upcoming_fragment, container, false);
 
         // 1. get a reference to recyclerView
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
 
         // 2. set layoutManger
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        coordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id
-                .coordinatorLayout);
-
-        main = (MainActivity) getActivity();
-
+        // 4. Swipe container view
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -85,17 +86,7 @@ public class All extends Fragment {
         });
         swipeContainer.setColorSchemeResources(R.color.colorPrimary);
 
-        // this is data fro recycler view
-        // 3. create an adapter
-        //   preparedata();
-
-        // 4. set adapter
-        // 5. set item animator to DefaultAnimator
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
         return rootView;
-
     }
 
     boolean fragmentAlreadyLoaded = false;
@@ -107,7 +98,6 @@ public class All extends Fragment {
 
         if (savedInstanceState == null && !fragmentAlreadyLoaded) {
             fragmentAlreadyLoaded = true;
-
             getListing();
         }
     }
@@ -124,14 +114,21 @@ public class All extends Fragment {
             recyclerView.setLayoutManager(llm);
             recyclerView.setHasFixedSize(true);
             recyclerView.setItemViewCacheSize(20);
-            //  setEmptyAdapter();
+
+            setEmptyAdapter();
+
         }
     }
 
     public void getListing() {
         swipeContainer.setRefreshing(true);
-        Call<List<Listing>> call = userClient.getListing(MainActivity.token, MainActivity.id);
+        dialog = new ProgressDialog(main);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Loading...");
+        dialog.show();
+        Call<List<Listing>> call = userClient.getListing(MainActivity.token);
         call.enqueue(new Callback<List<Listing>>() {
+            private List<Listing> listings = new ArrayList<>();
 
             @Override
             public void onResponse(Response<List<Listing>> response, Retrofit retrofit) {
@@ -139,23 +136,51 @@ public class All extends Fragment {
                     for (Listing list : response.body()) {
                         listings.add(list);
                     }
-                    AllAdapter adapter = new AllAdapter(listings, main);
-                    recyclerView.setAdapter(adapter);
+                    filterData(listings);
+                    dialog.dismiss();
                     swipeContainer.setRefreshing(false);
+//                    DataAdapter adapter = new DataAdapter(listings, main);
+//                    recyclerView.setAdapter(adapter);
+
                 } else {
-                    swipeContainer.setRefreshing(false);
                     error = ErrorUtils.parseError(response, retrofit);
-                    snackbar = Snackbar
-                            .make(coordinatorLayout, error.message(), Snackbar.LENGTH_SHORT);
+                    Log.d("Error", error.message());
+                    swipeContainer.setRefreshing(false);
+                    dialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
+                dialog.dismiss();
                 swipeContainer.setRefreshing(false);
-                Log.d("Error", t.getMessage());
             }
         });
 
+    }
+
+    public void filterData(List<Listing> data)
+    {
+        List<Listing> listings = new ArrayList<>();
+
+        String given_response = "completed";
+        String given_response2 = "finished";
+        for(Listing list: data)
+        {
+            String response = list.getStatus();
+            if (response.equals(given_response) || response.equals(given_response2))
+            {
+                listings.add(list);
+                DataAdapter adapter = new DataAdapter(listings, main);
+                recyclerView.setAdapter(adapter);
+            }
+        }
+    }
+
+
+    public void setEmptyAdapter() {
+        List<Listing> listings = new ArrayList<>();
+        DataAdapter adapter = new DataAdapter(listings, main);
+        recyclerView.setAdapter(adapter);
     }
 }

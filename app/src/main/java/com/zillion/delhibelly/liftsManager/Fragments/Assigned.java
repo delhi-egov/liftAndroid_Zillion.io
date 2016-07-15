@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.zillion.delhibelly.liftsManager.Adapters.DataAdapter;
 import com.zillion.delhibelly.liftsManager.MainActivity;
 import com.zillion.delhibelly.liftsManager.Network.ErrorUtils;
@@ -30,7 +29,8 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class Upcoming extends Fragment {
+
+public class Assigned extends Fragment {
 
     MainActivity main;
     private RecyclerView recyclerView;
@@ -38,12 +38,13 @@ public class Upcoming extends Fragment {
     private List<HashMap> data;
     private String number;
     private SwipeRefreshLayout swipeContainer;
-    private ProgressDialog dialog;
     private ServiceGeneratorMain.UserClient userClient;
     private ApiError error;
+    private ProgressDialog dialog;
 
 
-    public Upcoming() {
+
+    public Assigned() {
         // Required empty public constructor
 
     }
@@ -57,11 +58,9 @@ public class Upcoming extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
         // Send context to adapter
         main = (MainActivity) getActivity();
-
-        userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
-
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.upcoming_fragment, container, false);
@@ -162,12 +161,12 @@ public class Upcoming extends Fragment {
         List<Listing> listings = new ArrayList<>();
 
         String given_response = "Not Scheduled";
-        String not_status = "scheduled";
+        String not_status = "pending";
         for(Listing list: data)
         {
             String response = list.getScheduledDate();
             String status = list.getStatus();
-            if (!response.equals(given_response) && status.equals(not_status))
+            if (response.equals(given_response) && status.equals(not_status))
             {
                 listings.add(list);
                 DataAdapter adapter = new DataAdapter(listings, main);
@@ -183,4 +182,5 @@ public class Upcoming extends Fragment {
         DataAdapter adapter = new DataAdapter(listings, main);
         recyclerView.setAdapter(adapter);
     }
+
 }

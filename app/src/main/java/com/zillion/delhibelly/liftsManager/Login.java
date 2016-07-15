@@ -88,9 +88,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void login() {
         final String username = this.loginEmail.getText().toString();
         final String password = this.loginPassword.getText().toString();
+        final String login_token = "login_token";
         if (username.isEmpty() || password.isEmpty()) {
             snackbar = Snackbar
-                    .make(coordinatorLayout, "Please Fill All Details", Snackbar.LENGTH_SHORT);
+                    .make(coordinatorLayout, "Please Fill Assigned Details", Snackbar.LENGTH_SHORT);
             snackbar.show();
         } else {
             dialog = new ProgressDialog(Login.this);
@@ -98,7 +99,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             dialog.setMessage("Loading...");
             dialog.show();
             final ServiceGeneratorMain.UserClient userClient = ServiceGeneratorMain.createService(ServiceGeneratorMain.UserClient.class);
-            Call<User> call = userClient.getToken(username, password);
+            Call<User> call = userClient.getToken(login_token,username, password);
             call.enqueue(new Callback<User>() {
 
                 @Override
@@ -112,13 +113,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 .make(coordinatorLayout, error.message(), Snackbar.LENGTH_SHORT);
                         snackbar.show();
                         dialog.dismiss();
+                        System.out.println("bc"+response.raw());
                     }
 
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
-                    Log.d("Error", t.getMessage());
+                    snackbar = Snackbar
+                            .make(coordinatorLayout, "Error", Snackbar.LENGTH_SHORT);
                     dialog.dismiss();
                 }
             });

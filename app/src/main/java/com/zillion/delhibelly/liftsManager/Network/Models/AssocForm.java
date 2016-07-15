@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AssocForm {
-
     @SerializedName("applicant_name")
     @Expose
     private String applicantName;
@@ -86,15 +85,15 @@ public class AssocForm {
     @SerializedName("isReportReceived")
     @Expose
     private Boolean isReportReceived;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("id")
-    @Expose
-    private Integer id;
 
     /**
      * @return The applicantName
@@ -475,6 +474,20 @@ public class AssocForm {
     }
 
     /**
+     * @return The id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id The id
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
      * @return The createdAt
      */
     public String getCreatedAt() {
@@ -501,19 +514,4 @@ public class AssocForm {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    /**
-     * @return The id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 }

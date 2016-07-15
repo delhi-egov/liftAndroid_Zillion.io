@@ -44,8 +44,8 @@
             android:name=".MainActivity"
             android:label="@string/app_name" />
 
-        <activity android:name=".ListingActivity" />
-        <activity android:name=".Form" />
+        <activity android:name=".ListingActivity"
+            android:label="@string/app_name"/>
 
         <activity
             android:name=".Login"

@@ -11,16 +11,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.crashlytics.android.Crashlytics;
-import com.zillion.delhibelly.liftsManager.Adapters.AllAdapter;
-import com.zillion.delhibelly.liftsManager.Fragments.All;
-import com.zillion.delhibelly.liftsManager.Fragments.Settings;
+import com.zillion.delhibelly.liftsManager.Fragments.Assigned;
+import com.zillion.delhibelly.liftsManager.Fragments.Submitted;
 import com.zillion.delhibelly.liftsManager.Fragments.Upcoming;
-import com.zillion.delhibelly.liftsManager.Network.ErrorUtils;
 import com.zillion.delhibelly.liftsManager.Network.Models.ApiError;
 import com.zillion.delhibelly.liftsManager.Network.Models.Listing;
 import com.zillion.delhibelly.liftsManager.Network.ServiceGeneratorMain;
@@ -29,10 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -46,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private ApiError error;
     private Snackbar snackbar;
     private CoordinatorLayout coordinatorLayout;
+    public String time="-";
+    public List<Listing> upcoming_data = new ArrayList<>();
 
 
     @Override
@@ -86,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Assigned(), getString(R.string.fragment_two_all));
         adapter.addFragment(new Upcoming(), getString(R.string.fragment_one_upcoming));
-        adapter.addFragment(new All(), getString(R.string.fragment_two_all));
-        adapter.addFragment(new Settings(), getString(R.string.fragment_three_settings));
+        adapter.addFragment(new Submitted(), getString(R.string.fragment_three_settings));
         viewPager.setAdapter(adapter);
     }
 

@@ -5,40 +5,48 @@ import com.google.gson.annotations.SerializedName;
 
 
 public class Listing {
-
     @SerializedName("assocDeputyId")
     @Expose
-    private AssocDeputyId assocDeputyId;
+    private Integer assocDeputyId;
     @SerializedName("assocForm")
     @Expose
     private AssocForm assocForm;
     @SerializedName("assocInspector")
     @Expose
-    private AssocInspector assocInspector;
-    @SerializedName("inspectorStatus")
+    private Integer assocInspector;
+    @SerializedName("assocReport")
     @Expose
-    private String inspectorStatus;
+    private Integer assocReport;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("scheduledDate")
+    @Expose
+    private String scheduledDate;
+    @SerializedName("completedOn")
+    @Expose
+    private String completedOn;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("id")
-    @Expose
-    private Integer id;
 
     /**
      * @return The assocDeputyId
      */
-    public AssocDeputyId getAssocDeputyId() {
+    public Integer getAssocDeputyId() {
         return assocDeputyId;
     }
 
     /**
      * @param assocDeputyId The assocDeputyId
      */
-    public void setAssocDeputyId(AssocDeputyId assocDeputyId) {
+    public void setAssocDeputyId(Integer assocDeputyId) {
         this.assocDeputyId = assocDeputyId;
     }
 
@@ -59,29 +67,85 @@ public class Listing {
     /**
      * @return The assocInspector
      */
-    public AssocInspector getAssocInspector() {
+    public Integer getAssocInspector() {
         return assocInspector;
     }
 
     /**
      * @param assocInspector The assocInspector
      */
-    public void setAssocInspector(AssocInspector assocInspector) {
+    public void setAssocInspector(Integer assocInspector) {
         this.assocInspector = assocInspector;
     }
 
     /**
-     * @return The inspectorStatus
+     * @return The assocReport
      */
-    public String getInspectorStatus() {
-        return inspectorStatus;
+    public Integer getAssocReport() {
+        return assocReport;
     }
 
     /**
-     * @param inspectorStatus The inspectorStatus
+     * @param assocReport The assocReport
      */
-    public void setInspectorStatus(String inspectorStatus) {
-        this.inspectorStatus = inspectorStatus;
+    public void setAssocReport(Integer assocReport) {
+        this.assocReport = assocReport;
+    }
+
+    /**
+     * @return The status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status The status
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * @return The scheduledDate
+     */
+    public String getScheduledDate() {
+        return scheduledDate;
+    }
+
+    /**
+     * @param scheduledDate The scheduledDate
+     */
+    public void setScheduledDate(String scheduledDate) {
+        this.scheduledDate = scheduledDate;
+    }
+
+    /**
+     * @return The completedOn
+     */
+    public String getCompletedOn() {
+        return completedOn;
+    }
+
+    /**
+     * @param completedOn The completedOn
+     */
+    public void setCompletedOn(String completedOn) {
+        this.completedOn = completedOn;
+    }
+
+    /**
+     * @return The id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id The id
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -111,19 +175,4 @@ public class Listing {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    /**
-     * @return The id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 }
