@@ -92,7 +92,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         try {
             final ViewHolder h = (ViewHolder) viewHolder;
-            //viewHolder.distance.setText(data.get(position).get("distance").toString());
+            h.formId = assigned_data.get(position).getAssocForm().getId();
             h.assignId = assigned_data.get(position).getId();
             h.address.setText(assigned_data.get(position).getAssocForm().getApplicantAddress());
             h.customer_name.setText(assigned_data.get(position).getAssocForm().getContactPersonName());
@@ -112,7 +112,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             });
             h.more.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    nextPage(h, position);
+                    nextPage(h.formId);
                 }
 
             });
@@ -128,10 +128,9 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return assigned_data.size();
     }
 
-    public void nextPage(ViewHolder holder, int position) {
-
+    public void nextPage(int id) {
         Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
+        bundle.putInt("formId", id);
         Intent intent = new Intent(main, ListingActivity.class);
         intent.putExtras(bundle);
         main.startActivity(intent);
@@ -205,8 +204,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 //        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //        dialog.setMessage("Loading...");
 //        dialog.show();
-        System.out.println("1 " + id);
-        System.out.println("2 " + time);
         Call<Listing> call = userClient.schedule(MainActivity.token, id, time);
         call.enqueue(new Callback<Listing>() {
             @Override
@@ -268,6 +265,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         public ImageButton call, reschedule, more;
         public String mobile_no;
         public int assignId;
+        public int formId;
 
 
         public ViewHolder(View itemLayoutView) {

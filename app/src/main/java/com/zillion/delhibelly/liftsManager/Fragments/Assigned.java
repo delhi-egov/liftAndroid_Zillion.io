@@ -78,7 +78,9 @@ public class Assigned extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getListing();
+                setEmptyAdapter();
+                main.getListing(0);
+                swipeContainer.setRefreshing(false);
             }
         });
         swipeContainer.setColorSchemeResources(R.color.colorPrimary);
@@ -95,8 +97,10 @@ public class Assigned extends Fragment {
 
         if (savedInstanceState == null && !fragmentAlreadyLoaded) {
             fragmentAlreadyLoaded = true;
-            getListing();
+            main.getListing(0);
+
         }
+        main.getListing(0);
     }
 
     @Override
@@ -111,13 +115,17 @@ public class Assigned extends Fragment {
             recyclerView.setLayoutManager(llm);
             recyclerView.setHasFixedSize(true);
             recyclerView.setItemViewCacheSize(20);
-
             setEmptyAdapter();
 
         }
     }
 
-    public void getListing() {
+    public final void setListings(List<Listing> listings){
+        DataAdapter adapter = new DataAdapter(filterData(listings), main);
+        recyclerView.setAdapter(adapter);
+    }
+
+    /*public void getListing() {
         swipeContainer.setRefreshing(true);
         dialog = new ProgressDialog(main);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -154,9 +162,9 @@ public class Assigned extends Fragment {
             }
         });
 
-    }
+    }*/
 
-    public void filterData(List<Listing> data)
+    public List<Listing> filterData(List<Listing> data)
     {
         List<Listing> listings = new ArrayList<>();
 
@@ -169,11 +177,9 @@ public class Assigned extends Fragment {
             if (response.equals(given_response) && status.equals(not_status))
             {
                 listings.add(list);
-                DataAdapter adapter = new DataAdapter(listings, main);
-                adapter.notifyDataSetChanged();
-                recyclerView.setAdapter(adapter);
             }
         }
+        return listings;
     }
 
 

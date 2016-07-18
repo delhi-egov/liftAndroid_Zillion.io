@@ -28,7 +28,7 @@ import retrofit.Retrofit;
 public class ListingActivity extends AppCompatActivity {
 
     Button button;
-    int position = 0;
+    int formId = 0;
     private List<Listing> item_data;
     public ProgressDialog dialog;
     public ServiceGeneratorMain.UserClient userClient;
@@ -75,7 +75,7 @@ public class ListingActivity extends AppCompatActivity {
             }
         });
         Bundle bundle = getIntent().getExtras();
-        position = bundle.getInt("position");
+        formId = bundle.getInt("formId");
 
 //        firm_name = (TextView) findViewById(R.id.firmName);
 //        firm_address = (TextView) findViewById(R.id.firmAddress);
@@ -90,17 +90,18 @@ public class ListingActivity extends AppCompatActivity {
     }
 
 
-    public void setData() {
+    public void setData(List<Listing> listings) {
 //        firm_name.setText(listings.get(position).getAssocForm().getFirmName());
 //        firm_address.setText(listings.get(position).getAssocForm().getFirmAddress());
-        assignId = listings.get(position).getId();
-        address = listings.get(position).getAssocForm().getApplicantAddress();
-        lift_type.setText(listings.get(position).getAssocForm().getLiftType());
-        lift_speed.setText(listings.get(position).getAssocForm().getLiftSpeedMax());
-        lift_capacity.setText(listings.get(position).getAssocForm().getLiftCapacityWeight().toString());
-        lift_total_weight.setText(listings.get(position).getAssocForm().getLiftTotalWeight().toString());
-        lift_top_clearance.setText(listings.get(position).getAssocForm().getTopClearance().toString());
-        lift_bottom_clearance.setText(listings.get(position).getAssocForm().getBottomClearance().toString());
+            assignId = listings.get(0).getId();
+            address = listings.get(0).getAssocForm().getApplicantAddress();
+            lift_type.setText(listings.get(0).getAssocForm().getLiftType());
+            lift_speed.setText(listings.get(0).getAssocForm().getLiftSpeedMax());
+            lift_capacity.setText(listings.get(0).getAssocForm().getLiftCapacityWeight().toString());
+            lift_total_weight.setText(listings.get(0).getAssocForm().getLiftTotalWeight().toString());
+            lift_top_clearance.setText(listings.get(0).getAssocForm().getTopClearance().toString());
+            lift_bottom_clearance.setText(listings.get(0).getAssocForm().getBottomClearance().toString());
+
     }
 
 
@@ -109,7 +110,7 @@ public class ListingActivity extends AppCompatActivity {
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage("Loading...");
         dialog.show();
-        Call<List<Listing>> call = userClient.getListing(MainActivity.token);
+        Call<List<Listing>> call = userClient.getDetails(MainActivity.token,formId);
         call.enqueue(new Callback<List<Listing>>() {
 
             @Override
@@ -118,7 +119,7 @@ public class ListingActivity extends AppCompatActivity {
                     for (Listing list : response.body()) {
                         listings.add(list);
                     }
-                    setData();
+                    setData(listings);
                     dialog.dismiss();
                 } else {
                     error = ErrorUtils.parseError(response, retrofit);

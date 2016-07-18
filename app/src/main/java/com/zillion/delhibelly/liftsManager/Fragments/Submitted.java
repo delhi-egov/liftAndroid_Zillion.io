@@ -81,7 +81,10 @@ public class Submitted extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getListing();
+                setEmptyAdapter();
+                main.getListing(2);
+              //  showData();
+                swipeContainer.setRefreshing(false);
             }
         });
         swipeContainer.setColorSchemeResources(R.color.colorPrimary);
@@ -98,8 +101,11 @@ public class Submitted extends Fragment {
 
         if (savedInstanceState == null && !fragmentAlreadyLoaded) {
             fragmentAlreadyLoaded = true;
-            getListing();
+            main.getListing(2);
+           // showData();
         }
+        main.getListing(2);
+     //   showData();
     }
 
     @Override
@@ -120,7 +126,17 @@ public class Submitted extends Fragment {
         }
     }
 
-    public void getListing() {
+    public final void setListings(List<Listing> listings){
+        DataAdapter adapter = new DataAdapter(filterData(listings), main);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void showData(){
+        DataAdapter adapter = new DataAdapter(filterData(main.listings), main);
+        recyclerView.setAdapter(adapter);
+    }
+
+    /*public void getListing() {
         swipeContainer.setRefreshing(true);
         dialog = new ProgressDialog(main);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -157,9 +173,9 @@ public class Submitted extends Fragment {
             }
         });
 
-    }
+    }*/
 
-    public void filterData(List<Listing> data)
+    public List<Listing> filterData(List<Listing> data)
     {
         List<Listing> listings = new ArrayList<>();
 
@@ -175,6 +191,7 @@ public class Submitted extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
         }
+        return listings;
     }
 
 

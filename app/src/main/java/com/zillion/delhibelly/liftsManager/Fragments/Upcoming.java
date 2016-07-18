@@ -8,14 +8,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zillion.delhibelly.liftsManager.Adapters.DataAdapter;
 import com.zillion.delhibelly.liftsManager.MainActivity;
-import com.zillion.delhibelly.liftsManager.Network.ErrorUtils;
 import com.zillion.delhibelly.liftsManager.Network.Models.ApiError;
 import com.zillion.delhibelly.liftsManager.Network.Models.Listing;
 import com.zillion.delhibelly.liftsManager.Network.ServiceGeneratorMain;
@@ -24,11 +22,6 @@ import com.zillion.delhibelly.liftsManager.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 public class Upcoming extends Fragment {
 
@@ -79,7 +72,11 @@ public class Upcoming extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getListing();
+                setEmptyAdapter();
+                main.getListing(1);
+             //   showData();
+                swipeContainer.setRefreshing(false);
+
             }
         });
         swipeContainer.setColorSchemeResources(R.color.colorPrimary);
@@ -96,8 +93,11 @@ public class Upcoming extends Fragment {
 
         if (savedInstanceState == null && !fragmentAlreadyLoaded) {
             fragmentAlreadyLoaded = true;
-            getListing();
+            main.getListing(1);
+          //  showData();
         }
+        main.getListing(1);
+       // showData();
     }
 
     @Override
@@ -118,7 +118,17 @@ public class Upcoming extends Fragment {
         }
     }
 
-    public void getListing() {
+    public final void setListings(List<Listing> listings){
+        DataAdapter adapter = new DataAdapter(filterData(listings), main);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void showData(){
+        DataAdapter adapter = new DataAdapter(filterData(main.listings), main);
+        recyclerView.setAdapter(adapter);
+    }
+
+    /*public void getListing() {
         swipeContainer.setRefreshing(true);
         dialog = new ProgressDialog(main);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -155,26 +165,21 @@ public class Upcoming extends Fragment {
             }
         });
 
-    }
+    }*/
 
-    public void filterData(List<Listing> data)
-    {
+    public List<Listing> filterData(List<Listing> data) {
         List<Listing> listings = new ArrayList<>();
 
         String given_response = "Not Scheduled";
         String not_status = "scheduled";
-        for(Listing list: data)
-        {
+        for (Listing list : data) {
             String response = list.getScheduledDate();
             String status = list.getStatus();
-            if (!response.equals(given_response) && status.equals(not_status))
-            {
+            if (!response.equals(given_response) && status.equals(not_status)) {
                 listings.add(list);
-                DataAdapter adapter = new DataAdapter(listings, main);
-                adapter.notifyDataSetChanged();
-                recyclerView.setAdapter(adapter);
             }
         }
+        return  listings;
     }
 
 

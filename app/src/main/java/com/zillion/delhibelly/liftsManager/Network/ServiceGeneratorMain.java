@@ -28,7 +28,7 @@ import retrofit.http.Query;
 
 public class ServiceGeneratorMain {
 
-    public static String API_BASE_URL = "http://192.169.3.117:8888/";
+    public static String API_BASE_URL = "http://192.169.4.46:8888/";
 
     private static OkHttpClient httpClient = new OkHttpClient();
     private static Retrofit.Builder builder =
@@ -109,5 +109,11 @@ public class ServiceGeneratorMain {
                                @Field("assignId") int assign_id,
                                @Field("scheduledDate") String scheduledDate
                                );
+
+        @FormUrlEncoded
+        @POST("inspector/getForm")
+        Call<List<Listing>> getDetails(@Header("access_token") String token,
+                               @Field("formId") int form_id
+        );
     }
 }

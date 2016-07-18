@@ -153,7 +153,6 @@ public class FormFragment extends Fragment implements View.OnClickListener {
         main.dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         main.dialog.setMessage("Loading...");
         main.dialog.show();
-        System.out.println("@@ "+main.assignId);
         Call<Form> call = main.userClient.submitForm(MainActivity.token, main.assignId, date, ans_one_1, ans_one_2, ans_two, true, ans_four, ans_five, ans_six, ans_seven, ans_eight, ans_nine, ans_ten, ans_eleven_one, ans_eleven_two, ans_twelve_one, ans_twelve_two, ans_thirteen, "");
         call.enqueue(new Callback<Form>() {
             @Override
